@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import Dashboard from './Dashboard';
+import LoginPage from './LoginPage';
+import RegistrationPage from './RegistrationPage';
+import axios from 'axios';
 
 export default class App extends Component {
   constructor() {
@@ -13,10 +16,42 @@ export default class App extends Component {
     }
   }
 
+  checkLoginStatus = () => {
+    axios
+      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .then(response => {
+        if (response.data.logged_in && this.state.loggedInStatus === "NOT_LOGGED_IN") {
+          this.setState({
+            loggedInStatus: "LOGGED_IN",
+            user: response.data.user
+          })
+        } else if (!response.data.logged_in && this.state.loggedInStatus === "LOGGED_IN") {
+          this.setState({
+            loggedInStatus: "LOGGED_IN",
+            user: response.data.user
+          })
+        }
+    })
+      .catch(error => {
+        console.log("check login error", error);
+      })
+  }
+
+  componentDidMount() {
+    this.checkLoginStatus();
+  }
+
   handleLogin = data => {
     this.setState({
       loggedInStatus: "LOGGED_IN",
-      user: data
+      user: data.user
+    });
+  }
+
+  handleLogout = () => {
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN",
+      user: {}
     });
   }
 
@@ -39,6 +74,26 @@ export default class App extends Component {
               render={ props => (
                 <Dashboard {...props}
                   loggedInStatus={this.state.loggedInStatus}
+                  userData={this.state.user}
+                  handleLogout={this.handleLogout}
+                />
+              )}
+            />
+            <Route
+              exact path={'/registration'}
+              render={ props => (
+                <RegistrationPage {...props}
+                  loggedInStatus={this.state.loggedInStatus}
+                  handleLogin={this.handleLogin}
+                />
+              )}
+            />
+            <Route
+              exact path={'/login'}
+              render={ props => (
+                <LoginPage {...props}
+                  loggedInStatus={this.state.loggedInStatus}
+                  handleLogin={this.handleLogin}
                 />
               )}
             />
