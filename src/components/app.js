@@ -5,6 +5,7 @@ import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
 import RegistrationPage from './RegistrationPage';
 import axios from 'axios';
+import ProtectedRoute from './hoc/ProtectedRoute';
 
 export default class App extends Component {
   constructor() {
@@ -69,15 +70,12 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route
+            <ProtectedRoute
               exact path={'/dashboard'}
-              render={ props => (
-                <Dashboard {...props}
-                  loggedInStatus={this.state.loggedInStatus}
-                  userData={this.state.user}
-                  handleLogout={this.handleLogout}
-                />
-              )}
+              loggedInStatus={this.state.loggedInStatus}
+              userData={this.state.user}
+              handleLogout={this.handleLogout}
+              component={Dashboard}
             />
             <Route
               exact path={'/registration'}

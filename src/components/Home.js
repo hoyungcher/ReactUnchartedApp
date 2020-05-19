@@ -14,6 +14,7 @@ export default class Home extends Component {
         <h1>Homepage</h1>
         <Link to='/registration' >Registration</Link>
         <Link to='/login' >Login</Link>
+        {this.props.loggedInStatus === "LOGGED_IN" ? <Link to='/dashboard'>Dashboard</Link> : null }
         <h1>Status: {this.props.loggedInStatus}</h1>
       </div>
     );

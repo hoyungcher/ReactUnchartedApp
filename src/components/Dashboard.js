@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -20,7 +22,6 @@ export default class Dashboard extends Component {
     return (
       <div>
         <h1>Dashboard</h1>
-        <h1>Status: {this.props.loggedInStatus}</h1>
         <h2>Welcome, {this.props.userData.first_name}</h2>
         <button onClick={() => this.handleLogoutClick()}>Log out</button>
       </div>
