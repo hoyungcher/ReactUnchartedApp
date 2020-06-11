@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Registration from "./auth/Registration";
 import Login from "./auth/Login";
 import { Link } from 'react-router-dom';
+import Navbar from "./navbar/Navbar.js";
 
 export default class Home extends Component {
   constructor(props) {
@@ -11,11 +12,8 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Homepage</h1>
-        <Link to='/registration' >Registration</Link>
-        <Link to='/login' >Login</Link>
+        <Navbar loggedInStatus={this.props.loggedInStatus} userData={this.props.userData} />
         {this.props.loggedInStatus === "LOGGED_IN" ? <Link to='/dashboard'>Dashboard</Link> : null }
-        <h1>Status: {this.props.loggedInStatus}</h1>
       </div>
     );
   }

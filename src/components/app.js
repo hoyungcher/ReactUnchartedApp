@@ -67,6 +67,7 @@ export default class App extends Component {
                 <Home {...props}
                   handleLogin={this.handleLogin}
                   loggedInStatus={this.state.loggedInStatus}
+                  userData={this.state.user}
                 />
               )}
             />
@@ -95,6 +96,9 @@ export default class App extends Component {
                 />
               )}
             />
+            <Route>
+
+            </Route>
           </Switch>
         </BrowserRouter>
       </div>
